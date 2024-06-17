@@ -53,4 +53,52 @@ export const PROVIDER = ({children}) => {
         }
     }
 
+    // LOAD TOKEN DATA
+    const LOAD_TOKEN = async (token) => {
+        try{
+            const tokenDetail = await CONNECTING_CONTRACT(token);
+            return tokenDetail;
+        }catch(error){
+            const errorMsg = parseErrorMsg(error);
+            notifyError(errorMsg);
+            console.log(errorMsg);
+        }
+    }
+
+    // INTERNAL FUNCTION
+
+    const getPool = async (tokenA, tokenB, feeAmount, provider) => {
+        const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA];
+        
+        const poolAddress = Pool.getAddress(token0, token1, feeAmount);
+        let contract = new Ethers.Contract(poolAddress, IUniswapV3Pool, provider);
+    
+        let liquidity = await contract.liquidity();
+        
+        let {sqrtPriceX96, tick} = await contract.slot0();
+
+        liquidity = JSBI.BigInt(liquidity.toString());
+        sqrtPriceX96 = JSBI.BigInt(sqrtPriceX96.toString());
+
+        return new Pool(token0, token1, feeAmount, sqrtPriceX96, liquidity, tick, [
+            {
+                index: nearestUsableTick(TickMath.MIN_TICK, TICK_SPACINGS[FeeAmount]),
+                liquidityNet: liquidity,
+                liquidityGross: liquidity
+            },
+            {
+                index: nearestUsableTick(TickMath.MIN_TICK, TICK_SPACINGS[feeAmount]),
+                liquidityNet: JSBI.multiply(liquidity, JSBI.BigInt("-1")),
+                liquidityGross: liquidity,
+            }
+        ]);
+
+
+
+
+
+
+
+    }
+
 }

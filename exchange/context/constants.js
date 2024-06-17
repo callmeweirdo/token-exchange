@@ -65,7 +65,6 @@ export const CONNECTING_CONTRACT = async (ADDRESS) => {
 
         return token
 
-
     }catch(error){
         console.log(error);
     }
