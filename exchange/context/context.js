@@ -80,6 +80,8 @@ export const PROVIDER = ({children}) => {
         liquidity = JSBI.BigInt(liquidity.toString());
         sqrtPriceX96 = JSBI.BigInt(sqrtPriceX96.toString());
 
+        console.log("cALLING----------- ")
+
         return new Pool(token0, token1, feeAmount, sqrtPriceX96, liquidity, tick, [
             {
                 index: nearestUsableTick(TickMath.MIN_TICK, TICK_SPACINGS[FeeAmount]),
@@ -90,15 +92,30 @@ export const PROVIDER = ({children}) => {
                 index: nearestUsableTick(TickMath.MIN_TICK, TICK_SPACINGS[feeAmount]),
                 liquidityNet: JSBI.multiply(liquidity, JSBI.BigInt("-1")),
                 liquidityGross: liquidity,
-            }
+            }  
         ]);
-
-
-
-
-
-
-
     }
 
+    // SWAP OPTIONS
+
+    const swapOptions = (options) => {
+        return Object.assign(
+            {
+                slippageTolerance: new Percentage(5, 1000),
+                recipient: RECIPIENT,
+            },
+            options
+        )
+    }
+
+    //BuildTrade
+    const BuildTrade = (trade) => {
+        return new RouterTrade({
+            v2Routes: trade.filter((trade) => trade instanceof V2Trade).map((trade) => ({
+                routev2: trade.route,
+                inputAmount: trade.inputAmount,
+                outputAmount: trade.outputAmount,
+            }))
+        })
+    }
 }
