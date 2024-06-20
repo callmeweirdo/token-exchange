@@ -184,6 +184,19 @@ export const PROVIDER = ({ children }) => {
             const opts = swapOptions({});
             const params = SwapRouter.swapERC20CallParameters(RouterTrade, opts);
 
+            console.log(WETH_USDC_V3);
+            console.log(trade);
+            console.log(RouterTrade);
+            console.log(opts);
+            console.log(params);
+
+            let tokenA;
+            let tokenB;
+
+            const ethBalance = await provider.getBalance(RECIPIENT);
+            tokenA = await tokenAddress1.balance;
+            tokenB = await tokenAddress2.balance;
+
         }catch(error){
             const errorMsg = parseErrorMsg(error);
             notifyError(errorMsg);
