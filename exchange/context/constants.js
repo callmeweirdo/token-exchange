@@ -35,7 +35,7 @@ export const web3Provider = async () => {
 }
 
 
-
+// CONNECTING CONTRACT
 export const CONNECTING_CONTRACT = async (ADDRESS) => {
     try{
          const provider = await web3Provider();
