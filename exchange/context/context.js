@@ -182,6 +182,7 @@ export const PROVIDER = ({ children }) => {
             const RouterTrade = buildTrade([trade]);
 
             const opts = swapOptions({});
+            const params = SwapRouter.swapERC20CallParameters(RouterTrade, opts);
 
         }catch(error){
             const errorMsg = parseErrorMsg(error);
