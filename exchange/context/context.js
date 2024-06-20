@@ -129,6 +129,9 @@ export const PROVIDER = ({ children }) => {
         })
     }
 
+    // DEMO ACCOUNT
+    const RECIPIENT = `0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B`;
+
     // Swap Function
     const swap = async (token_1, token_2, swapInputAmount) => {
         try{
@@ -169,6 +172,16 @@ export const PROVIDER = ({ children }) => {
                 provider
             )
 
+            const inputEther = ethers.utils.parseEther(`1`).toString();
+            const trade = await V3Trade.fromRoute(
+                new RouteV3([WETH_USDC_V3], ETHER, TOKEN_B),
+                CurrencyAmount.fromRawAmount(Ether, inputEther),
+                TradeType.EXACT_INPUT
+            );
+
+            const RouterTrade = buildTrade([trade]);
+
+            const opts = swapOptions({});
 
         }catch(error){
             const errorMsg = parseErrorMsg(error);
