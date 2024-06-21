@@ -190,12 +190,36 @@ export const PROVIDER = ({ children }) => {
             console.log(opts);
             console.log(params);
 
+            let ethBalance;
             let tokenA;
             let tokenB;
 
-            const ethBalance = await provider.getBalance(RECIPIENT);
+            ethBalance = await provider.getBalance(RECIPIENT);
             tokenA = await tokenAddress1.balance;
             tokenB = await tokenAddress2.balance;
+
+            console.log("-----------Before Balance");
+            console.log("EthBalance:", ethers.utils.formatUnits(ethBalance, 18));
+
+            console.log("tokenA : ", tokenA);
+            console.log("tokenB :", tokenB);
+
+            const tx = await signer.sendTransaction({
+                data: params.calldata,
+                to: "",
+                value: params.value,
+                from: RECIPIENT
+            });
+
+            const receipt = await tx.wait();
+
+            console.log(`--------------SUCCESS`);
+            console.log(`STATUS`, receipt.status);
+
+            ethBalance = await provider.getBalance(RECIPIENT);
+            tokenA = await tokenAddress1.balance;
+            tokenB = await tokenAddress2.balance;
+            console.log(`--------------AFTER`);
 
         }catch(error){
             const errorMsg = parseErrorMsg(error);
@@ -203,4 +227,21 @@ export const PROVIDER = ({ children }) => {
             console.log(error);
         }
     }
+
+    return (
+        <CONTEXT.Provider value={{
+            TOKEN_SWAP,
+            LOAD_TOKEN,
+            notifyError,
+            notifySuccess,
+            setLoader,
+            connect,
+            loader,
+            connect,
+            address,
+            swap
+        }} >
+
+        <CONTEXT.Provider/>
+        )
 }
