@@ -14,7 +14,7 @@ export const V3_SWAP_ROUTER_ADDRESS =
 const TEST_ACCOUNT = "0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B";
 
 // FETCH CONTRACT
-const fetchTokenContract = (signer, contract) => {
+const fetchTokenContract = (signer, ADDRESS) => {
     return new ethers.Contract(ADDRESS, ERC20_ABI, signer);
 }
 
@@ -34,7 +34,6 @@ export const web3Provider = async () => {
     }
 }
 
-
 // CONNECTING CONTRACT
 export const CONNECTING_CONTRACT = async (ADDRESS) => {
     try{
@@ -49,13 +48,14 @@ export const CONNECTING_CONTRACT = async (ADDRESS) => {
         const balance = await contract.balance(TEST_ACCOUNT);
         const name = await contract.name();
         const supply = await contract.totalSupply();
+        const symbol = await contract.totalSupply();
         const decimals = await contract.decimals();
         const address = await contract.address();
 
         const token =  {
             address: address,
             name: name,
-            Symbol: Symbol,
+            symbol: Symbol,
             decimals: decimals,
             supply: ethers.utils.formatEther(supply.toString()),
             balance: ethers.utils.formatEther(balance.toString()),
