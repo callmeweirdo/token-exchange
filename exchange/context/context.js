@@ -21,7 +21,7 @@ export const CONTEXT = React.createContext();
 
 export const PROVIDER = ({ children }) => {
     const TOKEN_SWAP = "TOKEN SWAP EXCHANGE";
-    const [loader, setLoader] = useState(fasle);
+    const [loader, setLoader] = useState(false);
     const [address, setAddress] = useState("");
     const [chainId, setChainId] = useState("");
 
@@ -80,7 +80,7 @@ export const PROVIDER = ({ children }) => {
         liquidity = JSBI.BigInt(liquidity.toString());
         sqrtPriceX96 = JSBI.BigInt(sqrtPriceX96.toString());
 
-        console.log("cALLING----------- ")
+        console.log("cALLING----------- ");
 
         return new Pool(token0, token1, feeAmount, sqrtPriceX96, liquidity, tick, [
             {
