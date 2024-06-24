@@ -101,7 +101,7 @@ export const PROVIDER = ({ children }) => {
     const swapOptions = (options) => {
         return Object.assign(
             {
-                slippageTolerance: new Percentage(5, 1000),
+                slippageTolerance: new Percent(5, 1000),
                 recipient: RECIPIENT,
             },
             options
@@ -109,7 +109,7 @@ export const PROVIDER = ({ children }) => {
     }
 
     //BuildTrade
-    const BuildTrade = (trade) => {
+    const BuildTrade = (trades) => {
         return new RouterTrade({
             v2Routes: trades.filter((trade) => trade instanceof V2Trade).map((trade) => ({
                 routev2: trade.route,
@@ -121,7 +121,7 @@ export const PROVIDER = ({ children }) => {
                 inputAmount: trade.inputAmount,
                 outputAmount: trade.outputAmount,
             })),
-            mixedRoutes: trades.filter((trade) => trade instanceof V3Trade).map((trade) => ({
+            mixedRoutes: trades.filter((trade) => trade instanceof MixedRouteTrade).map((trade) => ({
                 mixedRoute: trade.route,
                 inputAmount: trade.inputAmount,
                 outputAmount: trade.outputAmount,
@@ -153,7 +153,7 @@ export const PROVIDER = ({ children }) => {
                 tokenAddress1.chainId,
                 tokenAddress1.address,
                 tokenAddress1.decimals,
-                tokenAddress1.Symbol,
+                tokenAddress1.symbol,
                 tokenAddress1.name,
             );
 
@@ -161,7 +161,7 @@ export const PROVIDER = ({ children }) => {
                 tokenAddress2.chainId,
                 tokenAddress2.address,
                 tokenAddress2.decimals,
-                tokenAddress2.Symbol,
+                tokenAddress2.symbol,
                 tokenAddress2.name,
             );
 
@@ -241,7 +241,7 @@ export const PROVIDER = ({ children }) => {
                 address,
                 swap
             }} >
-
+            {children}
         </CONTEXT.Provider>
         )
 }
