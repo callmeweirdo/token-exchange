@@ -28,7 +28,7 @@ const fetchTokenContract = (signer, ADDRESS) => {
 export const web3Provider = async () => {
     try{
         const connection = await web3Modal.connect();
-        const provider = new ethers.providers.web3Provider(connection);
+        const provider = new ethers.providers.Web3Provider(connection);
 
         // const network = await provider.getNetwork();
 

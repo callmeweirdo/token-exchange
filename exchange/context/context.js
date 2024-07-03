@@ -40,7 +40,7 @@ export const PROVIDER = ({ children }) => {
             if (accounts.length) {
                 setAddress(accounts[0]);
             } else {
-                notifyError("Sorry you haveno account");
+                notifyError("Sorry you have no account");
             }
 
             const provider = await web3Provider();
@@ -135,7 +135,7 @@ export const PROVIDER = ({ children }) => {
     // Swap Function
     const swap = async (token_1, token_2, swapInputAmount) => {
         try{
-            // console.log("CALLING ME ______________ SWAP") 
+            // console.log("CALLING ME ______________ SWAP"); 
             const _inputAmount = 1;
             const provider = web3Provider();
 
